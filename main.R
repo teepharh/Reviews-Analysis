@@ -1,36 +1,35 @@
 
 library(tidyverse)
-
 reviews <- read_csv("reviews.csv")
 reviews
 
 library(tidytext)
 tidy_reviews <- reviews %>%
-unnest_tokens(word, Reviews) 
+  unnest_tokens(word, Reviews)
 tidy_reviews
 
-#we count the tokenized data to in descending number to see the no of stop words
+#count the tokenized data in descending number to see the no of stop words
 tidy_reviews %>%
   count(word) %>%
   arrange(desc(n))
 
-#Next, we'd remove stop words from the reviews data
+#remove stop words from the reviews data
 library(tidytext)
 tidy_reviews2 <- reviews %>%
   unnest_tokens(word, Reviews) %>%
-anti_join(stop_words)
+  anti_join(stop_words)
 tidy_reviews2
 View(tidy_reviews2)
 
-#now lets count in descending order
+#count in descending order of n
 tidy_reviews2 %>%
   count(word) %>%
   arrange(desc(n))
 View(tidy_reviews2)
 
 #we create a new ID column for the review data with the mutate function
-#the mutate function counts the no of times an item appears in a row
-#it counts the number of rows
+#the mutate function counts the no of times an item appears in a row i.e
+#counts the number of rows
 tidy_reviews_mutate <- reviews %>%
   mutate(id = row_number()) %>%
   unnest_tokens(word, Reviews) %>%
@@ -38,12 +37,6 @@ tidy_reviews_mutate <- reviews %>%
 View(tidy_reviews_mutate)  
 tidy_reviews_mutate
 
-#to see the the long list of words and their respective counts
-#in order to identify the terms to b added as custom stop words
-tidy_reviews_count <- tidy_reviews2 %>%
-  count(word) %>%
-  arrange(desc(n))
-View(tidy_reviews_count)
 
 #create a dataframe of custom stop words to remove words that are not
 #informative and assign the tribble to custom stop words
@@ -152,7 +145,7 @@ custom_stop_words <- tribble(
   "apps",        "CUSTOM",
   "atm",         "CUSTOM",
   "attention",   "CUSTOM",
-  "authentication", "CUSTOM",
+  "authentication","CUSTOM",
   "basic",       "CUSTOM",
   "beautiful",   "CUSTOM",
   "bebt",        "CUSTOM",
@@ -200,147 +193,145 @@ custom_stop_words <- tribble(
   "ensure",       "CUSTOM",
   "enter",        "CUSTOM",
   "error",        "CUSTOM",
-"waoooowww",   "CUSTOM",
-"magica", "CUSTOM",
-"withing", "CUSTOM",
-"service", "CUSTOM",
-"relationship", "CUSTOM",
-"reply", "CUSTOM",
-"electricity", "CUSTOM",
-"token", "CUSTOM",
-"yesterday", "CUSTOM",
-"service", "CUSTOM",
-"terms", "CUSTOM",
-"generation", "CUSTOM",
- "raymond", "CUSTOM",
-"fast", "CUSTOM",
-"served", "CUSTOM",
-"goodi", "CUSTOM",
-"ya'll", "CUSTOM",
-"friends", "CUSTOM",
-"loved", "CUSTOM",
-"takes",  "CUSTOM",
-"paying", "CUSTOM",
-"okey", "CUSTOM",
-"options", "CUSTOM",
-"navigate", "CUSTOM",
-"selected", "CUSTOM",
-"flew", "CUSTOM",
-"debited", "CUSTOM",
-"funtional", "CUSTOM",
-"handy", "CUSTOM",
-"stop", "CUSTOM",
-"solution", "CUSTOM",
-"wonderfully", "CUSTOM",
-"lessen", "CUSTOM",
-"guy's", "CUSTOM",
-"20k", "CUSTOM",
-"worth", "CUSTOM",
-"line", "CUSTOM",
-"frustrating", "CUSTOM",
-"3days", "CUSTOM",
-"line", "CUSTOM",
-"precise", "CUSTOM",
-"feed", "CUSTOM",
-"straightforward", "CUSTOM",
-"massive", "CUSTOM",
-"ooo", "CUSTOM",
-"5", "CUSTOM",
-"firstly", "CUSTOM",
-"late", "CUSTOM",
-"family", "CUSTOM",
-"extremely", "CUSTOM",
-"difficult", "CUSTOM",
-"link", "CUSTOM",
-"standing", "CUSTOM",
-"front", "CUSTOM",
-"difficult", "CUSTOM",
-"god", "CUSTOM",
-"start", "CUSTOM",
-"technology", "CUSTOM",
-"suggest", "CUSTOM",
-"3", "CUSTOM",
-"offline", "CUSTOM",
-"essential", "CUSTOM",
-"platforms", "CUSTOM",
-"tie", "CUSTOM",
-"online", "CUSTOM",
-"simpler", "CUSTOM",
-"ux", "CUSTOM",
-"lay", "CUSTOM",
-"infirmed", "CUSTOM",
-"store", "CUSTOM",
-"registered", "CUSTOM",
-"starts", "CUSTOM",
-"hiccups", "CUSTOM",
-"fine", "CUSTOM",
-"soo", "CUSTOM",
-"payment", "CUSTOM",
-"section", "CUSTOM",
-"steps", "CUSTOM",
-"protection", "CUSTOM",
-"debited", "CUSTOM",
-"pls", "CUSTOM",
-"response", "CUSTOM",
-"frame", "CUSTOM",
-"resolve", "CUSTOM",
-"quality", "CUSTOM",
-"somedays", "CUSTOM",
-"individuals", "CUSTOM",
-"subscribe", "CUSTOM",
-"home", "CUSTOM",
-"phed", "CUSTOM",
-"stars", "CUSTOM",
-"props", "CUSTOM", 
-"highly", "CUSTOM",
-"refunded", "CUSTOM",
-"experiencing", "CUSTOM",
-"recently", "CUSTOM",
-"1", "CUSTOM",
-"makes", "CUSTOM",
-"everytime", "CUSTOM",
-"thia", "CUSTOM",
-"ts", "CUSTOM",
-"integration", "CUSTOM",
-"hope", "CUSTOM",
-"function", "CUSTOM",
-"restored", "CUSTOM",
-"jor", "CUSTOM",
-"inputing", "CUSTOM",
-"hardware", "CUSTOM",
-"pin", "CUSTOM",
-"page", "CUSTOM",
-"trips", "CUSTOM",
-"indefinitely", "CUSTOM",
-"toll", "CUSTOM",
-"free", "CUSTOM",
-"process", "CUSTOM",
-"thumbs", "CUSTOM",
-"nigeria", "CUSTOM",
-"operate", "CUSTOM",
-"week", "CUSTOM",
-"laid", "CUSTOM",
-"inhave", "CUSTOM",
-"23rd", "CUSTOM",
-"000", "CUSTOM",
-"15", "CUSTOM",
-"29th", "CUSTOM",
-"saving", "CUSTOM",
-"hours", "CUSTOM",
-"meter", "CUSTOM", 
-"61", "CUSTOM",
-"ommitted", "CUSTOM",
-"havent", "CUSTOM",
-"receive", "CUSTOM",
-"reverse", "CUSTOM",
-"inoperative", "CUSTOM",
-"uninstall", "CUSTOM",
-"fiew", "CUSTOM",
-
-
+  "waoooowww",    "CUSTOM",
+  "magica",       "CUSTOM",
+  "withing",      "CUSTOM",
+  "service",      "CUSTOM",
+  "relationship", "CUSTOM",
+  "reply",        "CUSTOM",
+  "electricity",  "CUSTOM",
+  "token",        "CUSTOM",
+  "yesterday",    "CUSTOM",
+  "service",      "CUSTOM",
+  "terms",        "CUSTOM",
+  "generation",   "CUSTOM",
+  "raymond",      "CUSTOM",
+  "fast",         "CUSTOM",
+  "served",       "CUSTOM",
+  "goodi",        "CUSTOM",
+  "ya'll",        "CUSTOM",
+  "friends",      "CUSTOM",
+  "loved",        "CUSTOM",
+  "takes",        "CUSTOM",
+  "paying",       "CUSTOM",
+  "okey",         "CUSTOM",
+  "options",      "CUSTOM",
+  "navigate",     "CUSTOM",
+  "selected",     "CUSTOM",
+  "flew",         "CUSTOM",
+  "debited",      "CUSTOM",
+  "funtional",    "CUSTOM",
+  "handy",        "CUSTOM",
+  "stop",         "CUSTOM",
+  "solution",     "CUSTOM",
+  "wonderfully",  "CUSTOM",
+  "lessen",       "CUSTOM",
+  "guy's",        "CUSTOM",
+  "20k",          "CUSTOM",
+  "worth",        "CUSTOM",
+  "line",         "CUSTOM",
+  "frustrating",  "CUSTOM",
+  "3days",        "CUSTOM",
+  "line",         "CUSTOM",
+  "precise",      "CUSTOM",
+  "feed",         "CUSTOM",
+  "straightforward", "CUSTOM",
+  "massive",      "CUSTOM",
+  "ooo",          "CUSTOM",
+  "5",            "CUSTOM",
+  "firstly",      "CUSTOM",
+  "late",         "CUSTOM",
+  "family",       "CUSTOM",
+  "extremely",    "CUSTOM",
+  "difficult",    "CUSTOM",
+  "link",         "CUSTOM",
+  "standing",     "CUSTOM",
+  "front",        "CUSTOM",
+  "difficult",    "CUSTOM",
+  "god",          "CUSTOM",
+  "start",        "CUSTOM",
+  "technology",   "CUSTOM",
+  "suggest",      "CUSTOM",
+  "3",            "CUSTOM",
+  "offline",      "CUSTOM",
+  "essential",    "CUSTOM",
+  "platforms",    "CUSTOM",
+  "tie",          "CUSTOM",
+  "online",       "CUSTOM",
+  "simpler",      "CUSTOM",
+  "ux",           "CUSTOM",
+  "lay",          "CUSTOM",
+  "infirmed",     "CUSTOM",
+  "store",        "CUSTOM",
+  "registered",   "CUSTOM",
+  "starts",       "CUSTOM",
+  "hiccups",      "CUSTOM",
+  "fine",         "CUSTOM",
+  "soo",          "CUSTOM",
+  "payment",      "CUSTOM",
+  "section",      "CUSTOM",
+  "steps",        "CUSTOM",
+  "protection",   "CUSTOM",
+  "debited",      "CUSTOM",
+  "pls",          "CUSTOM",
+  "response",     "CUSTOM",
+  "frame",        "CUSTOM",
+  "resolve",      "CUSTOM",
+  "quality",      "CUSTOM",
+  "somedays",     "CUSTOM",
+  "individuals",  "CUSTOM",
+  "subscribe",    "CUSTOM",
+  "home",         "CUSTOM",
+  "phed",         "CUSTOM",
+  "stars",        "CUSTOM",
+  "props",        "CUSTOM", 
+  "highly",       "CUSTOM",
+  "refunded",     "CUSTOM",
+  "experiencing", "CUSTOM",
+  "recently",     "CUSTOM",
+  "1",            "CUSTOM",
+  "makes",        "CUSTOM",
+  "everytime",    "CUSTOM",
+  "thia",         "CUSTOM",
+  "ts",           "CUSTOM",
+  "integration",  "CUSTOM",
+  "hope",         "CUSTOM",
+  "function",     "CUSTOM",
+  "restored",     "CUSTOM",
+  "jor",          "CUSTOM",
+  "inputing",     "CUSTOM",
+  "hardware",     "CUSTOM",
+  "pin",          "CUSTOM",
+  "page",         "CUSTOM",
+  "trips",        "CUSTOM",
+  "indefinitely", "CUSTOM",
+  "toll",         "CUSTOM",
+  "free",         "CUSTOM",
+  "process",      "CUSTOM",
+  "thumbs",       "CUSTOM",
+  "nigeria",      "CUSTOM",
+  "operate",      "CUSTOM",
+  "week",         "CUSTOM",
+  "laid",         "CUSTOM",
+  "inhave",       "CUSTOM",
+  "23rd",         "CUSTOM",
+  "000",          "CUSTOM",
+  "15",           "CUSTOM",
+  "29th",         "CUSTOM",
+  "saving",       "CUSTOM",
+  "hours",        "CUSTOM",
+  "meter",        "CUSTOM", 
+  "61",           "CUSTOM",
+  "ommitted",     "CUSTOM",
+  "havent",       "CUSTOM",
+  "receive",      "CUSTOM",
+  "reverse",      "CUSTOM",
+  "inoperative",  "CUSTOM",
+  "uninstall",    "CUSTOM",
+  "fiew",         "CUSTOM",
 )
 
-#we combine the original stop words with the custom stop words with bind_rows()
+#combine the original stop words with the custom stop words with bind_rows()
 
 library(tidytext)
 stop_words_final <- stop_words %>%
@@ -355,12 +346,12 @@ View(tidy_reviews3)
 
 library(dplyr)
 library(ggplot2)
-  reviews_chart <- tidy_reviews3 %>%
-    count(word)
+reviews_chart <- tidy_reviews3 %>%
+  count(word)
 ggplot(na.omit(reviews_chart), aes(x = word, y = n, fill = "green")) +
-      geom_col(show.legend = FALSE) + coord_flip() + ggtitle("Review Word Counts") 
-  
-  
+  geom_col(show.legend = FALSE) + coord_flip() + ggtitle("Review Word Counts") 
+
+
 #PLOTTING WORDCLOUDS
 library(wordcloud)
 tidy_cloud <- tidy_reviews3 %>%
@@ -369,7 +360,7 @@ wordcloud(
   words = tidy_cloud$word,
   freq = tidy_cloud$n,
   colors = "orange"
-  )
+)
 #you can add a maximum number of words
 wordcloud(
   words = tidy_cloud$word,
@@ -395,9 +386,9 @@ get_sentiments("loughran")
 #are used most often for each sentiment
 sentiment_review %>%
   count(word, sentiment) %>%
-arrange(desc(n))
+  arrange(desc(n))
 
-#visualizing the sentiment review by positive and negative
+#visualizing the sentiment review by positive and negative sentiments
 sentiment_review2 <- sentiment_review %>%
   filter(sentiment %in% c("positive", "negative"))
 sentiment_review2
@@ -410,14 +401,14 @@ review_category_count <- sentiment_review2 %>%
 
 #Now we visualize these top 10 positive and negative words using facet_wrap().
 ggplot(review_category_count, aes(x = word2, y = n, fill = "sentiment")) + 
-         geom_col(show.legend = FALSE) + 
-         facet_wrap (~ sentiment, scales = "free") +
-          coord_flip() + 
-         labs(
-           title = "Sentiment Word Counts",
-           x = "Words"
-         )
-        
+  geom_col(show.legend = FALSE) + 
+  facet_wrap (~ sentiment, scales = "free") +
+  coord_flip() + 
+  labs(
+    title = "Sentiment Word Counts",
+    x = "Words"
+  )
+
 #VISUALIZING REVIEW RATING
 library(tidytext)
 get_sentiments("bing")
@@ -426,7 +417,7 @@ get_sentiments("bing")
 library(dplyr)
 rating_review <- sentiment_review %>%
   inner_join(get_sentiments("bing")) %>%
-count(Rating, sentiment)
+  count(Rating, sentiment)
 
 #after counting, we have the problem of different rating showing up for 
 #the same sentiment. Positive displays a rating of 5 and 1 on diff rows.
@@ -436,18 +427,19 @@ count(Rating, sentiment)
 sentiment_rating <- sentiment_review %>%
   inner_join(get_sentiments("bing")) %>%
   count(Rating, sentiment) %>%
-spread(sentiment, n)%>%
-# by using spread(), we have a single row for the review rating instead of
-#multiple rows
+  spread(sentiment, n)%>%
+  
+  # by using spread(), we have a single row for the review rating instead of
+  #multiple rows
+  
+  # computing the difference between the positive and negative counts is 
+  #simply a matter of using mutate().
+  #visualise sentiment by rating
+  mutate(overall_sentiment = positive - negative)
 
-# computing the difference between the positive and negative counts is 
-#simply a matter of using mutate().
-#visualise sentiment by rating
-mutate(overall_sentiment = positive - negative)
-     
-  ggplot(sentiment_rating, aes(x = Rating, y = overall_sentiment, 
-                               fill = as.factor(Rating))) +
-    geom_col(show.legend = FALSE) + 
+ggplot(sentiment_rating, aes(x = Rating, y = overall_sentiment, 
+                             fill = as.factor(Rating))) +
+  geom_col(show.legend = FALSE) + 
   coord_flip() + 
   labs(
     title = "Overall Sentiment by Rating",
@@ -455,20 +447,20 @@ mutate(overall_sentiment = positive - negative)
     y = "Overall Sentiment"
   )
 #this resulted in a chart for one rating as there was only one rating value of
-  #5 after positive and negative had been subtracted
-  #Instead I'd plot rating count 
-  library(tidyverse)
-  library(tidytext)
-  sentiment_rating <- sentiment_review %>%
-    inner_join(get_sentiments("bing")) %>%
-    count(Rating)
-    
-  ggplot(sentiment_rating, aes(x = Rating, y = n, fill = "Rating")) +
-    geom_col(show.legend = FALSE) + 
-    coord_flip() + 
-    labs(
-      title = "Rating Count",
-      x = "Rating",
-      y = "Count"
-    )
-  
+#5 after positive and negative had been subtracted. #Instead, rating count will
+#be plotted
+
+library(tidyverse)
+library(tidytext)
+sentiment_rating <- sentiment_review %>%
+  inner_join(get_sentiments("bing")) %>%
+  count(Rating)
+
+ggplot(sentiment_rating, aes(x = Rating, y = n, fill = "Rating")) +
+  geom_col(show.legend = FALSE) + 
+  coord_flip() + 
+  labs(
+    title = "Rating Count",
+    x = "Rating",
+    y = "Count"
+  )
